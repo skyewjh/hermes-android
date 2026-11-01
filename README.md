@@ -44,6 +44,10 @@ bash tools/build_apk.sh     # 产物: android/hermes-android-debug.apk
 
 ### 一键启动（推荐）
 
+**Windows：双击项目根目录的 `start-server.bat`**（停止：双击 `stop-server.bat`）。窗口会一直开着跑网关 + 桥接，关掉窗口或 Ctrl+C 即停止。
+
+如果更喜欢命令行：
+
 ```bash
 bash tools/start-server.sh
 # 输出示例：
@@ -53,10 +57,11 @@ bash tools/start-server.sh
 
 脚本做的事：生成并复用 `tools/.session-token` → 用它启动只监听 `127.0.0.1:9119` 的网关 → 起 `loopback-bridge.py` 到 `0.0.0.0:9122` → 用真实请求验证 token 与桥接都通 → 打印手机该填的两行。
 
-- 停止：`bash tools/start-server.sh --stop`
+- 停止：`bash tools/start-server.sh --stop`（或双击 `stop-server.bat`）
 - 换 token：删掉 `tools/.session-token` 再启动
 - 换端口：`--gateway-port 9119 --bridge-port 9122`
 - 日志：`tools/.run/gateway.log`、`tools/.run/bridge.log`
+- 依赖：Git for Windows（提供 bash）和 Hermes Agent 本体；脚本会自己按绝对路径找 `hermes.exe` / python，不依赖 PATH
 
 ### 手动启动（等价，分两条命令）
 
