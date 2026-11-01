@@ -1,0 +1,203 @@
+/* Phone (portrait) adjustments for the Hermes desktop renderer.
+ * Loaded on every width; every rule is scoped to .hm-mobile (set by
+ * hermes-mobile.js when the viewport is <= 760px). */
+
+:root.hm-locked,
+:root.hm-locked body {
+  overflow: hidden;
+}
+
+/* ---------------------------------------------------------------- hamburger */
+.hm-menu {
+  display: none;
+}
+
+.hm-mobile .hm-menu {
+  position: fixed;
+  left: max(10px, env(safe-area-inset-left));
+  top: max(6px, env(safe-area-inset-top));
+  z-index: 9000;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 0;
+  border: 1px solid var(--border, rgba(0, 0, 0, 0.12));
+  border-radius: 10px;
+  background: var(--background, #fff);
+  color: var(--foreground, #111);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+}
+
+.hm-menu > span {
+  display: block;
+  width: 15px;
+  height: 1.6px;
+  border-radius: 1px;
+  background: currentColor;
+}
+
+/* ---------------------------------------------------------------- drawer */
+.hm-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 8998;
+  background: rgba(0, 0, 0, 0.38);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 160ms ease;
+}
+
+.hm-backdrop.hm-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.hm-drawer {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 8999;
+  width: min(84vw, 340px);
+  display: flex;
+  flex-direction: column;
+  background: var(--background, #fff);
+  color: var(--foreground, #111);
+  border-right: 1px solid var(--border, rgba(0, 0, 0, 0.1));
+  box-shadow: 2px 0 16px rgba(0, 0, 0, 0.12);
+  transform: translateX(-102%);
+  transition: transform 180ms ease;
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+  visibility: hidden;
+}
+
+.hm-drawer.hm-open {
+  transform: translateX(0);
+  visibility: visible;
+}
+
+.hm-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 14px 14px 8px;
+}
+
+.hm-heading {
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.hm-new {
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border, rgba(0, 0, 0, 0.14));
+  background: var(--accent, #f4f4f5);
+  color: var(--foreground, #111);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.hm-search {
+  margin: 0 12px 8px;
+  padding: 8px 10px;
+  font-size: 13px;
+  border-radius: 8px;
+  border: 1px solid var(--border, rgba(0, 0, 0, 0.14));
+  background: var(--card, transparent);
+  color: inherit;
+  outline: none;
+}
+
+.hm-list {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 0 8px 16px;
+}
+
+.hm-row {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 9px 10px;
+  margin-bottom: 2px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.hm-row:active {
+  background: var(--accent, rgba(0, 0, 0, 0.05));
+}
+
+.hm-row.hm-active {
+  background: var(--accent, rgba(0, 0, 0, 0.06));
+}
+
+.hm-title {
+  font-size: 13.5px;
+  line-height: 1.35;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.hm-meta {
+  margin-top: 2px;
+  font-size: 11px;
+  opacity: 0.55;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.hm-empty {
+  padding: 24px 12px;
+  font-size: 13px;
+  opacity: 0.5;
+  text-align: center;
+}
+
+/* ------------------------------------------- desktop-only chrome on a phone */
+/* The window buttons and the docked-sidebar controls have no meaning on a
+ * phone and eat the only title bar there is. */
+.hm-mobile button[aria-label="Minimize window"],
+.hm-mobile button[aria-label="Maximize window"],
+.hm-mobile button[aria-label="Close window"],
+.hm-mobile button[aria-label="Layout editor"],
+.hm-mobile button[aria-label="HUD mode"],
+.hm-mobile button[aria-label="Swap sidebar sides"],
+.hm-mobile button[aria-label="Show right sidebar"],
+.hm-mobile button[aria-label="Hide sidebar"] {
+  display: none !important;
+}
+
+/* Keep the app's own content clear of the hamburger. */
+.hm-mobile #root {
+  padding-top: 0;
+}
+
+/* Composer: keep it usable above the keyboard. */
+.hm-mobile textarea,
+.hm-mobile [contenteditable="true"] {
+  font-size: 16px; /* stops iOS/Android zoom-on-focus */
+}
+
+@media (prefers-color-scheme: dark) {
+  .hm-drawer,
+  .hm-menu {
+    background: var(--background, #111);
+    color: var(--foreground, #eee);
+  }
+}

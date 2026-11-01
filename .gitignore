@@ -1,0 +1,23 @@
+# Local secrets and runtime state
+tools/.session-token
+tools/.run/
+*.log
+
+# Build outputs
+android/build/
+android/*.apk
+android/*.apk.idsig
+android/debug.keystore
+
+# The renderer bundle is copied into the APK at build time by tools/sync_web.sh;
+# keeping one copy in web/ avoids a second 44 MB tree in git.
+android/app/src/main/assets/www/
+
+# Toolchains
+tools/gradle-*/
+
+# Editor / OS noise
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
