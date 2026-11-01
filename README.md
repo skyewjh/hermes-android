@@ -101,6 +101,12 @@ Token 来源见 `tools/start-server.sh` 打印，或 `cat tools/.session-token`�
 
 MEDIA:D:/hermes_android/docs/screenshot-phone.png
 
+## 来源与许可
+
+- `web/` 是 [NousResearch/hermes-agent](https://github.com/NousResearch/hermes-agent) 桌面渲染层的构建产物（MIT），本仓库只是把它装进 Android 外壳，并对 `window.hermesDesktop` 做了移动端实现。
+- 本仓库其余代码（Android 外壳、桥接脚本、竖屏层、工具链）同样以 MIT 使用。
+- `web/` 里的 bundle 会随上游版本变化；换版本时用 `tools/sync_web.sh` 从新的 `apps/desktop/dist` 同步。
+
 ## 已知边界
 
 | 项目 | 状态 |
